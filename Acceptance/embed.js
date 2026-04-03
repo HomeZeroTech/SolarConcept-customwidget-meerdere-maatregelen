@@ -2029,20 +2029,38 @@
                         `;
                     };
 
-                    if (selectedCards.length === 1) {
-                        const card = selectedCards[0];
-                        const title = card.getAttribute("data-title");
-                        const cardUrl = card.getAttribute("data-value");
+                    if (selectedCards.length > 0) {
+                        const cardTypes = Array.from(selectedCards).map(card => card.getAttribute("data-type")).sort();
+                        const comboKey = cardTypes.join("-");
+                        
+                        let targetUrl = element.getAttribute("data-combination-" + comboKey + "-url");
+                        let customBtnText = element.getAttribute("data-combination-" + comboKey + "-button-text");
+                        
+                        // Check combinations or fallbacks
+                        if (!targetUrl && selectedCards.length === 1) {
+                            targetUrl = selectedCards[0].getAttribute("data-value");
+                        }
+                        targetUrl = targetUrl || combinedUrl || advicescanUrl || src;
 
-                        // Show TWO buttons: SPECIFIC flow is primary (green), advice is secondary (white)
-                        footerHtml += createButtonHtml(`Ga naar de ${title.toLowerCase()} flow`, cardUrl);
-                        footerHtml += createButtonHtml("Plan direct een advies gesprek in", advicescanUrl || cardUrl, true);
-                    } else if (selectedCards.length > 1) {
-                        // Show ONE button for multiple
-                        footerHtml += createButtonHtml("Plan direct een advies gesprek in", combinedUrl || advicescanUrl || src);
+                        // Calculate button title
+                        let btnTitle = customBtnText;
+                        if (!btnTitle) {
+                            if (selectedCards.length === 1) {
+                                const title = selectedCards[0].getAttribute("data-title");
+                                btnTitle = `Ga naar de ${title.toLowerCase()} flow`;
+                            } else {
+                                btnTitle = "Ga naar de geselecteerde combinatie";
+                            }
+                        }
+
+                        // Show Primary Button mapping to the precise URL
+                        footerHtml += createButtonHtml(btnTitle, targetUrl);
+
+                        // Always display the advisor flow button as secondary
+                        footerHtml += createButtonHtml("Plan direct een advies gesprek in", advicescanUrl || targetUrl, true);
                     } else {
                         // Fallback/No selection
-                        footerHtml += createButtonHtml("Plan direct een advies gesprek in", src || advicescanUrl);
+                        footerHtml += createButtonHtml("Plan direct een advies gesprek in", advicescanUrl || src);
                     }
 
                     footer.innerHTML = footerHtml;
