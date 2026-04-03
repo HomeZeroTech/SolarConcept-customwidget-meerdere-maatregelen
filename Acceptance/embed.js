@@ -1175,6 +1175,14 @@
             try {
                 const targetUrl = new URL(url);
                 const baseUrl = targetUrl.origin;
+                
+                // Skip the ping logic if the URL is not pointing to the known configurator
+                if (!baseUrl.includes("configurator.homezero.nl")) {
+                    console.info("External URL detected, skipping ping check. Redirecting directly to:", url);
+                    performRedirect(url);
+                    return;
+                }
+
                 const pingUrl = `${baseUrl}/ping/v1/ping`;
 
                 // Helper to fallback to Script loading (health.js)
