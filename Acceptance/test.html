@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeZero Widget - Local Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 24px;
+        }
+
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 12px 16px;
+            margin-bottom: 30px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .widget-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .config-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .config-section h2 {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        pre {
+            background: #263238;
+            color: #aed581;
+            padding: 16px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 13px;
+        }
+    </style>
+    <link rel="stylesheet" href="embed-styles.css">
+</head>
+
+<body>
+    <h1>HomeZero Widget - Local Test</h1>
+
+    <div class="widget-container">
+        <hz-embed data-open-new-tab="true" data-button-text="Plan direct een advies gesprek in" data-button-radius="12px"
+            data-color="#5cb85c" data-title="Waar heb je interesse in?*"
+            data-measurement-homebattery-url="https://configurator.homezero.nl/link/start?id=437d7a9c-6560-47b4-9bb4-580a4216a741"
+            data-measurement-homebattery-title="Thuisbatterij"
+            data-measurement-solarpanels-url="https://configurator.homezero.nl/link/start?id=548877c3-3242-4fa9-9e39-60116e610af2"
+            data-measurement-solarpanels-title="Zonnepanelen"
+            data-measurement-carcharger-url="https://configurator.homezero.nl/link/start?id=395f1733-40d3-4ed9-9b65-bc2677fb23c8"
+            data-measurement-carcharger-title="Laadpaal"
+            data-measurement-advisormodule-url="https://configurator.homezero.nl/link/start?id=2e461493-dd88-4fb0-b0bc-ebc90483d879"
+            data-measurement-advisormodule-title="Adviseur"
+            data-measurement-fusebox-url="https://configurator.homezero.nl/link/start?id=f8def5a1-3489-4e40-b0b9-31200cc05dc7"
+            data-measurement-fusebox-title="Groepenkast" data-show-email="true"></hz-embed>
+    </div>
+
+    <div class="config-section">
+        <h2>Current Configuration</h2>
+        <pre><code>&lt;hz-embed
+    data-open-new-tab="true"
+    data-button-text="Volgende"
+    data-button-radius="10px"
+    data-color="#004DF5"
+    data-title="Welke maatregel past bij jou?"
+    data-subtitle="Selecteer één of meerdere maatregelen"
+    data-measurement-solarpanels-url="https://...?id=AAA"
+    data-measurement-solarpanels-title="Zonnepanelen"
+    data-measurement-carcharger-url="https://...?id=FFF"
+    data-measurement-carcharger-title="Laadpaal"
+    data-measurement-homebattery-url="https://...?id=CCC"
+    data-measurement-homebattery-title="Thuisbatterij"
+    data-measurement-advicescan-url="https://...?id=GGG"
+    data-measurement-advicescan-title="Groepenkast"
+    data-show-email="true"
+&gt;&lt;/hz-embed&gt;</code></pre>
+    </div>
+
+    <!-- Load local embed.js -->
+    <script defer src="./embed.js"></script>
+</body>
+
+</html>
