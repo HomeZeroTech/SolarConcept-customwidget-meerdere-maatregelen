@@ -1775,10 +1775,10 @@
                 if (title || subtitle) {
                     fullHtml += '<div class="embed-header">';
                     if (title) {
-                        fullHtml += `<h2 class="embed-title">${title}</h2>`;
+                        fullHtml += `<h1 class="embed-title">${title}</h1>`;
                     }
                     if (subtitle) {
-                        fullHtml += `<p class="embed-subtitle">${subtitle}</p>`;
+                        fullHtml += `<h2 class="embed-subtitle">${subtitle}</h2>`;
                     }
                     fullHtml += "</div>";
                 }
@@ -2010,20 +2010,43 @@
                     const selectedCards = form.querySelectorAll(".measurement-card.selected");
                     let footerHtml = "";
 
-                    const createButtonHtml = (label, url, isSecondary = false) => {
+                    const createButtonHtml = (label, url, isSecondary = false, iconType = "calculator") => {
+                        // The primary button gradient and shadow are handled entirely by CSS class now, but if border radius or other inline styles remain, we keep them.
                         const styleStr = !isSecondary
-                            ? `background-color: ${primaryColor}; color: #fff;`
-                            : `background-color: #fff; color: ${primaryColor}; border: 2px solid ${primaryColor};`;
+                            ? `border-radius: ${buttonRadius}; margin-top: 12px !important; min-height: 52px !important;`
+                            : `border-radius: ${buttonRadius}; margin-top: 12px !important; min-height: 52px !important;`;
+                            
+                        const calcIcon = `
+                                    <svg style="width:16px;height:16px;color:currentColor;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <!-- Nub on top -->
+                                        <path d="M9 2H15V4H9V2Z" fill="currentColor" />
+                                        <!-- Body -->
+                                        <rect x="5" y="4" width="14" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                                        <!-- Screen -->
+                                        <rect x="8" y="7" width="8" height="4" stroke="currentColor" stroke-width="2"/>
+                                        <!-- Keypad dots -->
+                                        <rect x="8" y="13" width="1.5" height="1.5" fill="currentColor"/>
+                                        <rect x="11.25" y="13" width="1.5" height="1.5" fill="currentColor"/>
+                                        <rect x="14.5" y="13" width="1.5" height="1.5" fill="currentColor"/>
+                                        <rect x="8" y="16" width="1.5" height="1.5" fill="currentColor"/>
+                                        <rect x="11.25" y="16" width="1.5" height="1.5" fill="currentColor"/>
+                                        <rect x="14.5" y="16" width="1.5" height="1.5" fill="currentColor"/>
+                                        <rect x="8" y="19" width="1.5" height="1.5" fill="currentColor"/>
+                                        <rect x="11.25" y="19" width="1.5" height="1.5" fill="currentColor"/>
+                                        <rect x="14.5" y="19" width="1.5" height="1.5" fill="currentColor"/>
+                                    </svg>`;
+                                    
+                        const chatIcon = `
+                                    <svg style="width:16px;height:16px;color:currentColor;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 11.5C21 16.1944 16.9706 20 12 20C10.6385 20 9.34759 19.702 8.1963 19.1678C8.01633 19.0837 7.8093 19.0628 7.61668 19.109L3.5 20.0001L4.47545 16.0955C4.54228 15.8285 4.49842 15.5416 4.35417 15.3093C3.498 14.1843 3 12.8887 3 11.5C3 6.80558 7.02944 3 12 3C16.9706 3 21 6.80558 21 11.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>`;
+                                    
+                        const iconSvg = iconType === 'chat' ? chatIcon : calcIcon;
 
                         return `
-                            <button type="submit" class="embed-submit-button ${isSecondary ? 'embed-submit-button-secondary' : ''}" data-url="${url}" style="${styleStr} border-radius: ${buttonRadius}; margin-top: 12px !important; min-height: 52px !important;">
-                                <span class="btn-icon" style="display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:28px;height:28px;background:rgba(255,255,255,0.22);border-radius:6px;overflow:hidden;">
-                                    <svg style="width:16px;height:16px;color:currentColor;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="currentColor" stroke-width="2"/>
-                                        <path d="M7 7H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                        <path d="M7 11H9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                        <path d="M15 11H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
+                            <button type="submit" class="embed-submit-button ${isSecondary ? 'embed-submit-button-secondary' : ''}" data-url="${url}" style="${styleStr}">
+                                <span class="btn-icon" style="display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:28px;height:28px;background:rgba(${isSecondary ? '0,0,0,0.05' : '255,255,255,0.22'});border-radius:6px;overflow:hidden;">
+                                    ${iconSvg}
                                 </span>
                                 <span class="btn-label" style="flex:1;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font-size:15px;font-weight:700;text-align:left;">
                                     ${label}
@@ -2062,13 +2085,13 @@
                         }
 
                         // Show Primary Button mapping to the precise URL
-                        footerHtml += createButtonHtml(btnTitle, targetUrl);
+                        footerHtml += createButtonHtml(btnTitle, targetUrl, false, "calculator");
 
                         // Always display the advisor flow button as secondary
-                        footerHtml += createButtonHtml("Plan direct een advies gesprek in", advicescanUrl || targetUrl, true);
+                        footerHtml += createButtonHtml("Plan direct adviesgesprek <span class=\"btn-time\">(1 min)</span>", advicescanUrl || targetUrl, true, "chat");
                     } else {
                         // Fallback/No selection
-                        footerHtml += createButtonHtml("Plan direct een advies gesprek in", advicescanUrl || src);
+                        footerHtml += createButtonHtml("Plan direct adviesgesprek <span class=\"btn-time\">(1 min)</span>", advicescanUrl || src, true, "chat");
                     }
 
                     footer.innerHTML = footerHtml;

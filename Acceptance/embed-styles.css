@@ -6,6 +6,25 @@ hz-embed {
     width: 100%;
     display: block;
     container-type: inline-size;
+    font-family: 'Mont-Reguler', 'Mont', sans-serif;
+}
+
+.embed-form *, .embed-form *::before, .embed-form *::after {
+    font-family: inherit;
+}
+
+/* Explicit fallback for specific bold elements in case their system uses split font-families */
+.embed-form .embed-title,
+.embed-form .embed-label-bold,
+.embed-form .embed-submit-button,
+.embed-form .btn-label,
+.embed-form .measurement-card span {
+    font-family: 'Mont-Bold', 'Mont', sans-serif !important;
+}
+
+.embed-form .embed-subtitle,
+.embed-form .btn-time {
+    font-family: 'Mont-Reguler', 'Mont', sans-serif !important;
 }
 
 .embed-form .embed-row {
@@ -340,9 +359,24 @@ hz-embed {
 }
 
 .embed-form .embed-submit-button-secondary {
-    background-color: #ffffff !important;
-    border: 2px solid var(--primary-color, #2A6DF4) !important;
-    color: var(--primary-color, #2A6DF4) !important;
+    background-color: #EFEFEF !important;
+    border: none !important;
+    color: #132039 !important;
+}
+
+.embed-form .embed-submit-button {
+    background: linear-gradient(90deg, #387A49 0%, #5DB267 100%) !important;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08) !important;
+    border: none !important;
+    color: #fff !important;
+    text-shadow: 0px 1px 2px rgba(0,0,0,0.1);
+}
+
+.embed-form .embed-submit-button-secondary {
+    box-shadow: none !important;
+    background: #EFEFEF !important;
+    color: #132039 !important;
+    text-shadow: none !important;
 }
 
 .embed-form .embed-submit-button .btn-icon {
@@ -417,13 +451,13 @@ hz-embed {
 .embed-form .embed-title {
     font-size: 18px;
     font-weight: 700;
-    margin: 0 0 16px 0;
+    margin: 0 0 4px 0;
     color: #132039;
 }
 
 .embed-form .embed-subtitle {
     font-size: 14px;
-    margin: 0 0 14px 0;
+    margin: 0 0 20px 0;
     color: #7585a3;
     font-weight: 400;
 }
