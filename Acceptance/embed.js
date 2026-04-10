@@ -1400,6 +1400,7 @@
                 const dutchValidationMessages = translations.dutchValidation;
                 const advicescanUrl = element.getAttribute("data-measurement-advicescan-url") || element.getAttribute("data-measurement-advisormodule-url");
                 const combinedUrl = element.getAttribute("data-combined-url") || element.getAttribute("data-measurement-advisormodule-url");
+                const preselectedMeasurements = element.getAttribute("data-preselected-measurements") ? element.getAttribute("data-preselected-measurements").split(',').map(s => s.trim()) : [];
 
                 // Checkbox configuration
                 const checkboxTitle = element.getAttribute(
@@ -1822,8 +1823,10 @@
                             <div class="measurement-cards-container" id="measurement-cards" role="group" aria-label="${selectedLang.dropdownLabel}">
                                 ${measurementOptions
                             .map(
-                                (option) => `
-                                    <button type="button" class="measurement-card" data-value="${option.url}" data-type="${option.type}" data-title="${option.title}" aria-pressed="false">
+                                (option) => {
+                                    const isPreselected = preselectedMeasurements.includes(option.type);
+                                    return `
+                                    <button type="button" class="measurement-card${isPreselected ? ' selected' : ''}" data-value="${option.url}" data-type="${option.type}" data-title="${option.title}" aria-pressed="${isPreselected ? 'true' : 'false'}">
                                         <div class="card-checkmark">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                                                 <polyline points="20 6 9 17 4 12"></polyline>
@@ -1832,7 +1835,7 @@
                                         ${option.icon}
                                         <span>${option.title}</span>
                                     </button>
-                                `,
+                                `;}
                             )
                             .join("")}
                             </div>
@@ -2077,8 +2080,10 @@
                         let btnTitle = customBtnText;
                         if (!btnTitle) {
                             if (selectedCards.length === 1) {
+                                const cardType = selectedCards[0].getAttribute("data-type");
+                                const singleBtnText = element.getAttribute(`data-measurement-${cardType}-button-text`);
                                 const title = selectedCards[0].getAttribute("data-title");
-                                btnTitle = `Ga naar de ${title.toLowerCase()} flow`;
+                                btnTitle = singleBtnText || `Ga naar de ${title.toLowerCase()} flow`;
                             } else {
                                 btnTitle = "Ga naar de geselecteerde combinatie";
                             }
