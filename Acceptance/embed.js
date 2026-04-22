@@ -2015,9 +2015,7 @@
 
                     const createButtonHtml = (label, url, isSecondary = false, iconType = "calculator") => {
                         // The primary button gradient and shadow are handled entirely by CSS class now, but if border radius or other inline styles remain, we keep them.
-                        const styleStr = !isSecondary
-                            ? `border-radius: ${buttonRadius}; margin-top: 12px !important; min-height: 52px !important;`
-                            : `border-radius: ${buttonRadius}; margin-top: 12px !important; min-height: 52px !important;`;
+                        const styleStr = `border-radius: ${buttonRadius}; margin-top: 12px; min-height: 52px;`;
                             
                         const calcIcon = `
                                     <svg style="width:16px;height:16px;color:currentColor;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2113,7 +2111,6 @@
                     button.style.setProperty(
                         "border-radius",
                         `${buttonRadius}`,
-                        "important",
                     );
                 });
 
